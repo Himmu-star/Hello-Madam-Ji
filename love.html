@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You Sona 💖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #5d2a42;
+        }
+
+        .romantic-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Floating Hearts */
+        .floating-heart {
+            position: fixed;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            user-select: none;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatUp 6s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .reason-item {
+            border-left: 4px solid #ff4d6d;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 0 10px 10px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .reason-item:hover {
+            transform: translateX(10px);
+        }
+
+        /* Popup Notification */
+        #notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ff4d6d;
+        }
+
+        #notification.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .action-btn {
+            transition: all 0.3s ease;
+        }
+        .action-btn:active {
+            transform: scale(0.9);
+        }
+
+        #transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ff4d6d;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex flex-col items-center">
+
+    <div id="transition-overlay"></div>
+    <div id="notification"></div>
+
+    <!-- Main Container -->
+    <div class="max-w-2xl w-full z-10 space-y-8">
+        
+        <!-- Header -->
+        <div class="text-center space-y-2">
+            <h1 class="romantic-font text-5xl md:text-6xl text-white drop-shadow-lg">I Love You Sona 💖</h1>
+            <p class="text-white/80 italic">Aapke liye humara dil hazir hai...</p>
+        </div>
+
+        <!-- Reasons Section -->
+        <div class="glass-card">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                Kyuki... ❤️
+            </h2>
+            <div class="space-y-4">
+                <div class="reason-item">
+                    Hum kabhi aapko hurt karna nahi chahte humesha bas aapko khush dekhna chahte hai❤️
+                </div>
+                <div class="reason-item">
+                    Aap mere liye bahut bahut bahut jyada special hai 🥺
+                </div>
+                <div class="reason-item font-bold text-lg">
+                    I love you so much 💖
+                </div>
+            </div>
+        </div>
+
+        <!-- Shayari Section -->
+        <div class="glass-card bg-white/40">
+            <h2 class="romantic-font text-3xl mb-4 text-center">Meri Shayri ❤️</h2>
+            <p class="text-center leading-relaxed text-lg italic">
+                Teri muskan me meri puri duniya basti hai,<br>
+                Khud ko safal maan leta hu jab tu mere wajah se hasti hai,<br>
+                Tu udaas ho to dil toot jata hai,<br>
+                tujhe hurt kru to ye duniya bhi chhut jata hai ❤️
+            </p>
+        </div>
+
+        <!-- Interaction Buttons -->
+        <div class="flex justify-center gap-4">
+            <button onclick="showPop('Aapko tight hug 🤗')" class="action-btn bg-blue-400 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-blue-500 flex items-center gap-2">
+                Hug 🤗
+            </button>
+            <button onclick="showPop('Ek pyara sa kiss 😘')" class="action-btn bg-pink-500 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-pink-600 flex items-center gap-2">
+                Kiss 😘
+            </button>
+        </div>
+
+        <!-- Next Page Button -->
+        <div class="text-center pt-8">
+            <button onclick="nextPage()" class="bg-white text-pink-500 px-6 py-4 rounded-2xl font-bold shadow-xl hover:bg-pink-50 transition-colors flex items-center gap-3 mx-auto">
+                Aap ke liye kuch aur bhi hai ❤️
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = ['❤️', '💖', '💗', '💕', '🌸'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 400);
+
+        // Interaction Popups
+        function showPop(msg) {
+            const pop = document.getElementById('notification');
+            pop.innerText = msg;
+            pop.classList.add('active');
+            
+            setTimeout(() => {
+                pop.classList.remove('active');
+            }, 2000);
+        }
+
+        // Navigation
+        function nextPage() {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.style.opacity = '1';
+            setTimeout(() => {
+                window.location.href = 'special.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
