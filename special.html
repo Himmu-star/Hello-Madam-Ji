@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khas Aapke Liye ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #fff0f3;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            color: #4a4a4a;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .romantic-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* --- Envelope Animation --- */
+        .envelope-wrapper {
+            /* Height badha di gayi hai taaki letter ko space mile */
+            height: 500px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #ff4d6d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .envelope:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-top: 110px solid #ff758f;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            transform-origin: top;
+            transition: transform 0.5s 0.5s;
+        }
+
+        .envelope.open:before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 280px;
+            height: 180px;
+            background: white;
+            transition: 0.5s;
+            padding: 25px;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            z-index: 1;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+            border-radius: 5px;
+        }
+
+        .envelope.open .letter {
+            height: 380px;
+            bottom: 50px;
+            transform: scale(1.1);
+            z-index: 5;
+        }
+
+        /* --- Game Styles --- */
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 4px solid #ffb3c1;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .falling-heart {
+            position: absolute;
+            font-size: 24px;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        #basket {
+            position: absolute;
+            bottom: 10px;
+            width: 80px;
+            height: 50px;
+            background: #ff4d6d;
+            border-radius: 10px 10px 40px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            transition: left 0.1s ease-out;
+        }
+
+        .score-board {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-weight: bold;
+            color: #ff4d6d;
+        }
+
+        #game-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* --- Utilities --- */
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 60px 0 20px;
+            color: #ff4d6d;
+        }
+
+        #transition-overlay {
+            position: fixed;
+            inset: 0;
+            background: #c9184a;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+    </style>
+</head>
+<body class="pb-20">
+
+    <div id="transition-overlay"></div>
+
+    <!-- Letter Section -->
+    <h2 id="letter-section" class="section-title romantic-font">Ek Pyara Sa Khat... 💌</h2>
+    <div class="envelope-wrapper">
+        <div id="envelope" class="envelope" onclick="toggleLetter()">
+            <div class="letter">
+                <p class="font-bold text-red-600 text-lg mb-3">Dear Sona ❤️</p>
+                <p class="mb-4">Jab aap udas hoti hain na to sab kuch ruk sa jata hai. Na mann lagta hai, na kuch accha lagta hai.</p>
+                <p class="mb-4">Aap meri life ka wo ful ho jise hum kabhi murjhaya hua nahi dekh sakte.</p>
+                <p class="mb-4">Hum perfect nahi hoon par aapke liye better banna chahte hainn 💖 sach kahe to bestest... aapke bestestest... banna chahte hai.</p>
+                <p>Bas aapko humesha muskuate rakhna chahte hai aap meri duniya hai, apne iss duniya me khoye hue rahna chahte hai 🥹</p>
+            </div>
+        </div>
+    </div>
+    <p class="text-center text-sm text-gray-400 mt-[-20px]">Tap the envelope to open</p>
+
+    <!-- Game Section -->
+    <h2 class="section-title romantic-font">Catch My Love! 🎮</h2>
+    <div class="max-w-md mx-auto px-4">
+        <div id="game-container">
+            <div class="score-board">Love Points: <span id="score">0</span></div>
+            
+            <div id="game-overlay">
+                <h3 class="text-xl font-bold mb-4">Mera Pyaar Catch Karo! ❤️</h3>
+                <p class="mb-6 text-sm">Hearts catch karke apna score badhao...</p>
+                <button onclick="startGame()" class="bg-red-500 text-white px-6 py-2 rounded-full font-bold">Start Game</button>
+            </div>
+
+            <div id="basket">🧺</div>
+        </div>
+    </div>
+
+    <!-- Final Navigation -->
+    <div class="mt-12 text-center">
+        <button onclick="finalPath()" class="bg-white border-2 border-red-400 text-red-500 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-red-50 transition-all">
+            Bas ek last baat ❤️
+        </button>
+    </div>
+
+    <script>
+        // Letter Toggle with improved auto-scroll
+        function toggleLetter() {
+            const env = document.getElementById('envelope');
+            const isOpening = !env.classList.contains('open');
+            env.classList.toggle('open');
+            
+            if (isOpening) {
+                // Thoda delay taaki animation finish ho aur letter poora bahar aaye
+                setTimeout(() => {
+                    const section = document.getElementById('letter-section');
+                    const yOffset = -20; // Margin adjustment taaki top se thoda space rahe
+                    const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }, 600);
+            }
+        }
+
+        // Game Logic
+        let score = 0;
+        let gameActive = false;
+        const container = document.getElementById('game-container');
+        const basket = document.getElementById('basket');
+        const scoreEl = document.getElementById('score');
+        const overlay = document.getElementById('game-overlay');
+
+        container.addEventListener('mousemove', (e) => {
+            if(!gameActive) return;
+            let rect = container.getBoundingClientRect();
+            let x = e.clientX - rect.left - 40;
+            if(x < 0) x = 0;
+            if(x > rect.width - 80) x = rect.width - 80;
+            basket.style.left = x + 'px';
+        });
+
+        container.addEventListener('touchmove', (e) => {
+            if(!gameActive) return;
+            let rect = container.getBoundingClientRect();
+            let x = e.touches[0].clientX - rect.left - 40;
+            if(x < 0) x = 0;
+            if(x > rect.width - 80) x = rect.width - 80;
+            basket.style.left = x + 'px';
+        });
+
+        function startGame() {
+            score = 0;
+            scoreEl.innerText = score;
+            gameActive = true;
+            overlay.style.display = 'none';
+            
+            let gameTimer = setInterval(createFallingHeart, 600);
+            
+            setTimeout(() => {
+                gameActive = false;
+                clearInterval(gameTimer);
+                showEndScreen();
+            }, 15000); 
+        }
+
+        function createFallingHeart() {
+            if(!gameActive) return;
+            const heart = document.createElement('div');
+            heart.className = 'falling-heart';
+            heart.innerHTML = ['❤️', '💖', '💗', '💕'][Math.floor(Math.random()*4)];
+            heart.style.left = Math.random() * (container.clientWidth - 30) + 'px';
+            heart.style.top = '-40px';
+            container.appendChild(heart);
+
+            let pos = -40;
+            let fallSpeed = Math.random() * 2 + 3;
+
+            let fallInterval = setInterval(() => {
+                if(!gameActive) {
+                    heart.remove();
+                    clearInterval(fallInterval);
+                    return;
+                }
+                pos += fallSpeed;
+                heart.style.top = pos + 'px';
+
+                let hRect = heart.getBoundingClientRect();
+                let bRect = basket.getBoundingClientRect();
+
+                if (hRect.bottom >= bRect.top && 
+                    hRect.right >= bRect.left && 
+                    hRect.left <= bRect.right) {
+                    score += 10;
+                    scoreEl.innerText = score;
+                    heart.remove();
+                    clearInterval(fallInterval);
+                }
+
+                if (pos > 400) {
+                    heart.remove();
+                    clearInterval(fallInterval);
+                }
+            }, 20);
+        }
+
+        function showEndScreen() {
+            overlay.style.display = 'flex';
+            overlay.innerHTML = `
+                <h3 class="text-2xl font-bold text-red-500 mb-2">Game Over!</h3>
+                <p class="text-lg font-semibold mb-4">Aapne collect kiye ${score} Love Points! ❤️</p>
+                <p class="romantic-font text-xl italic mb-6">“Dekha… mera pyaar kitna zyada hai 😌❤️”</p>
+                <button onclick="startGame()" class="text-sm text-gray-500 underline">Play Again</button>
+            `;
+        }
+
+        function finalPath() {
+            document.getElementById('transition-overlay').style.opacity = '1';
+            setTimeout(() => {
+                window.location.href = 'promise.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
