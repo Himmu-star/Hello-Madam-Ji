@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sachi Sorry Sona ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #fff5f6;
+            --heart-red: #ff4d6d;
+        }
+
+        body {
+            background-color: var(--soft-pink);
+            color: #4a4a4a;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Healing Heart Animation */
+        .heart-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 30px;
+        }
+
+        .heart-half {
+            position: absolute;
+            width: 50px;
+            height: 80px;
+            background: var(--heart-red);
+            border-radius: 50px 50px 0 0;
+        }
+
+        .left-half {
+            left: 0;
+            transform: rotate(-45deg);
+            transform-origin: 100% 100%;
+            animation: healLeft 4s forwards ease-in-out;
+        }
+
+        .right-half {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+            animation: healRight 4s forwards ease-in-out;
+        }
+
+        @keyframes healLeft {
+            0% { transform: rotate(-60deg) translateX(-10px); opacity: 0.7; }
+            50% { transform: rotate(-45deg) translateX(0); opacity: 1; }
+            100% { transform: rotate(-45deg); }
+        }
+
+        @keyframes healRight {
+            0% { transform: rotate(60deg) translateX(10px); opacity: 0.7; }
+            50% { transform: rotate(45deg) translateX(0); opacity: 1; }
+            100% { transform: rotate(45deg); }
+        }
+
+        .heart-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: var(--heart-red);
+            filter: blur(20px);
+            opacity: 0;
+            animation: pulse 2s infinite 4s;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.2); }
+            100% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Message Styling */
+        .message-box {
+            max-width: 600px;
+            line-height: 1.8;
+            z-index: 10;
+        }
+
+        .hindi-text {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button Styling */
+        .next-btn {
+            margin-top: 40px;
+            background-color: var(--heart-red);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 5s;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.5);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 77, 109, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="transition-overlay"></div>
+
+    <div class="heart-container">
+        <div class="heart-glow"></div>
+        <div class="heart-half left-half"></div>
+        <div class="heart-half right-half"></div>
+    </div>
+
+    <div class="message-box">
+        <div class="hindi-text" style="animation-delay: 1s;">
+            Idhar kuchh dino me humse bahut sara galti hua hai aur hum mante hai aur iske liye sachi sorry hai 😔
+        </div>
+        <div class="hindi-text" style="animation-delay: 2.5s;">
+            Par aap mere liye kya hai ye aapko pata hai, aapke sad hone pe hurt hone pe aapse jyada bura humko lagta hai ❤️
+        </div>
+        <div class="hindi-text" style="animation-delay: 4s;">
+            Jab aap udas hote hai to humko rona aata hai...<br>
+            Aur jab aap khush hote hai to hum sab kuchh achhe se kar lete hai ✨
+        </div>
+    </div>
+
+    <button class="next-btn" onclick="goToLove()">
+        Suniye achhe se next ab ❤️
+    </button>
+
+    <script>
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 8 + 4 + 'px';
+            particle.style.width = size;
+            particle.style.height = size;
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = Math.random() * 100 + 'vh';
+            
+            document.body.appendChild(particle);
+            
+            const animation = particle.animate([
+                { transform: 'translateY(0) scale(1)', opacity: 0.5 },
+                { transform: `translateY(-${Math.random() * 100 + 50}px) scale(0)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'ease-out'
+            });
+
+            animation.onfinish = () => particle.remove();
+        }
+
+        setInterval(createParticle, 500);
+
+        function goToLove() {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.style.opacity = '1';
+            setTimeout(() => {
+                window.location.href = 'love.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
