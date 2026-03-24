@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Sona ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: rgba(255, 107, 107, 0.6);
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1a0a0a 0%, #050202 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Floating Hearts Animation */
+        .heart {
+            position: absolute;
+            color: #ff4d4d;
+            font-size: 20px;
+            pointer-events: none;
+            user-select: none;
+            z-index: 1;
+            filter: drop-shadow(0 0 5px var(--primary-glow));
+            animation: floatUp var(--duration) linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Typing Animation */
+        .typing-container {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            z-index: 10;
+            min-height: 4rem;
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #ff6b6b;
+            margin-left: 5px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Glowing Button */
+        .enter-btn {
+            margin-top: 3rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            background: transparent;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
+            opacity: 0; /* Initially hidden until typing finishes */
+        }
+
+        .enter-btn.visible {
+            opacity: 1;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .enter-btn:hover {
+            background: #ff6b6b;
+            color: #fff;
+            box-shadow: 0 0 30px #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Transition Overlay */
+        #transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 100;
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="stars" class="stars"></canvas>
+    
+    <div id="transition-overlay"></div>
+
+    <div class="typing-container">
+        <span id="typed-text"></span><span class="cursor">|</span>
+    </div>
+
+    <button id="enterBtn" class="enter-btn">
+        Enter My Heart ❤️
+    </button>
+
+    <!-- Background Music -->
+    <!-- Note: Many browsers block autoplay unless the user interacts. 
+         This will attempt to play, but standard behavior may require the first click to start audio. -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Typing Effect Logic
+        const textToType = "Hello Sona... aap ke liye kuch khaas banaya hai ❤️";
+        const typedTextElement = document.getElementById('typed-text');
+        const enterBtn = document.getElementById('enterBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let index = 0;
+
+        function type() {
+            if (index < textToType.length) {
+                typedTextElement.textContent += textToType.charAt(index);
+                index++;
+                setTimeout(type, 100);
+            } else {
+                enterBtn.classList.add('visible');
+            }
+        }
+
+        // Floating Hearts Logic
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.setProperty('--duration', (Math.random() * 3 + 4) + 's');
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        // Stars Background
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const starArray = [];
+        for(let i=0; i<150; i++) {
+            starArray.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 1.5,
+                opacity: Math.random()
+            });
+        }
+
+        function drawStars() {
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            starArray.forEach(star => {
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI*2);
+                ctx.fill();
+                
+                // Twinkle
+                star.opacity += (Math.random() - 0.5) * 0.05;
+                if(star.opacity < 0) star.opacity = 0;
+                if(star.opacity > 1) star.opacity = 1;
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        // Navigation & Audio
+        enterBtn.addEventListener('click', () => {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.style.display = 'block';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+            }, 10);
+            
+            setTimeout(() => {
+                // In a real app, this would navigate. 
+                // For this environment, we'll simulate the "Sorry" page update or log it.
+                window.location.href = 'sorry.html';
+            }, 1000);
+        });
+
+        // Start everything
+        window.onload = () => {
+            type();
+            setInterval(createHeart, 300);
+            drawStars();
+            
+            // Attempt to play music (might be blocked until click)
+            bgMusic.volume = 0.3;
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // Autoplay was prevented. Music will start on the first button click if needed.
+                    document.body.addEventListener('click', () => bgMusic.play(), { once: true });
+                });
+            }
+        };
+
+        window.onresize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+    </script>
+</body>
+</html>
